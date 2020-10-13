@@ -73,7 +73,14 @@ pcap_t *handle = NULL;
 ARP_PK packet;
 
 void send_arp(uint8_t* my_ip, uint8_t* my_mac, uint8_t* your_ip, uint8_t* your_mac, uint8_t op){
-    Mac(packet.eth.ether_dhost, "ff:ff:ff:ff:ff:ff");
+    if(op == ARPOP_REQUEST){
+        Mac(packet.eth.ether_dhost, "ff:ff:ff:ff:ff:ff");
+        Mac(packet.arp_.tmac_addr, "00:00:00:00:00:00");
+    }
+    else{
+        memcpy(packet.eth.ether_dhost, your_mac, MAC_SIZE);
+        memcpy(packet.arp_.tmac_addr, your_mac, MAC_SIZE);
+    }
     memcpy(packet.eth.ether_shost, my_mac, MAC_SIZE);
     packet.eth.ether_type = htons(ETHERTYPE_ARP);
 
@@ -85,7 +92,6 @@ void send_arp(uint8_t* my_ip, uint8_t* my_mac, uint8_t* your_ip, uint8_t* your_m
 
     memcpy(packet.arp_.smac_addr, my_mac, MAC_SIZE);
     memcpy(packet.arp_.sip_addr, my_ip, IP_SIZE);
-    Mac(packet.arp_.tmac_addr, "00:00:00:00:00:00");
     memcpy(packet.arp_.tip_addr, your_ip, IP_SIZE);
     int res = pcap_sendpacket(handle, reinterpret_cast<const u_char*>(&packet), sizeof(ARP_PK));
     
