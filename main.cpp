@@ -174,6 +174,7 @@ int main(int argc, char* argv[]){
         printf("[+] target ip addr: %d.%d.%d.%d\n", t_ip[0], t_ip[1], t_ip[2], t_ip[3]);
 
         send_arp(t_ip, my_mac, s_ip, your_mac, ARPOP_REPLY);
-        pcap_close(handle);
     }
+    pcap_close(handle);
+
 }
