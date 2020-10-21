@@ -15,9 +15,6 @@ $ sudo ./send-arp ens33 172.30.1.31 172.30.1.254
 [+] target ip addr: 172.30.1.254
 ```
 
-### Results
-![KakaoTalk_Photo_2020-10-13-19-13-27](https://user-images.githubusercontent.com/64528476/95847840-2efd5600-0d88-11eb-8d52-5fa149d08ced.png)
-
 
 ### Some problem
 - When I want to get the victim's mac address, until he gives me the reply packet, I request the a lot of request packet.
